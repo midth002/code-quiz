@@ -2,7 +2,8 @@ var startQuizBtn = document.getElementById('start-quiz');
 var timerEl = document.getElementById('time-countdown');
 var quizQuestionEl = document.getElementById('questions');
 var sectionEl = document.getElementById('container');
-var orderListEl = document.getElementById('list')
+var orderListEl = document.getElementById('list');
+var startPage = document.querySelector('.start-page');
 
 var question1 = 'What is the correct syntax for referring to an external script called "xxx.js"';
 
@@ -15,9 +16,13 @@ startQuizBtn.addEventListener("click", function() {
     quizQuestionEl.textContent = question1;
     console.log(quizQuestionEl);
 
- 
-   
     
+    if (startPage.style.display !== "none") {
+        startPage.style.display = "none";
+    } else {
+        startPage.style.display = "block";
+    }
+     
     var timeInterval = setInterval(function() {
         if (timeLeft >= 1) {
             timeLeft--;
