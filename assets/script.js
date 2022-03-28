@@ -2,7 +2,7 @@ var startQuizBtn = document.getElementById('start-quiz');
 var timerEl = document.getElementById('time-countdown');
 var quizQuestionEl = document.getElementById('questions');
 var sectionEl = document.getElementById('container');
-var orderListEl = document.getElementById('')
+var orderListEl = document.getElementById('list')
 
 var question1 = 'What is the correct syntax for referring to an external script called "xxx.js"';
 
@@ -40,7 +40,9 @@ function  makeOrderList() {
     for (var i = 0; i < multipleChoice1.length; i++) {
         var item = document.createElement('li');
         item.textContent = multipleChoice1[i];
-        console.log(item);
+        console.log(orderListEl);
+        orderListEl.appendChild(item);
+    // orderListEl.appendChild(item);
     }
     
     return orderListEl;
