@@ -12,7 +12,7 @@ var currentQuestion = 0;
 
 
 
-var answers = ['<script src="xxx.js">', 'False' ]
+var answers = ['<script src="xxx.js">', 'False', '.Js', 'if(i==5)']
 
 var questions = [
     { 
@@ -33,26 +33,27 @@ var questions = [
         {option: 'False', answer: true},
         {option: '["One", "Two", "Three]', answer: false}
         ]
-    }
+    },
 
-    /*{
+    {
         question: 'What is the file extension we use for JavaScript?',
-        answer: '.Js',
-        option1: '.Js', 
-        option2: '.Java', 
-        option3: '.javascript', 
-        option4: '.xml'
-        
+        answers: [
+        {option: '.Js', answer: true},
+        {option: '.Java', answer: false},
+        {option: '.javascript', answer: false},
+        {option: '.xml', answer: false}
+        ]
     }, 
 
     {
         question: 'Which of these is the way we write IF statements in JavaScript?',
-        answer: 'if(i==5)',
-        option1: 'if i=5 then', 
-        option2:'if i=5', 
-        option3: 'if i===5 then', 
-        option4: 'if(i==5)'
-    }*/
+        answers: [
+        {option: 'if i=5 then', answer: false},
+        {option:'if i=5', answer: false},
+        {option: 'if i===5 then', answer: false},
+        {option: 'if(i==5)', answer: true}
+        ]
+    }
 ]
 
 
@@ -88,7 +89,7 @@ startQuizBtn.addEventListener("click", function() {
 
 
 function renderQuestion() {
-    var btn;
+    console.log(currentQuestion)
     quizQuestionEl.textContent = questions[currentQuestion].question;
     
     
@@ -100,20 +101,23 @@ function renderQuestion() {
         li.appendChild(item);
         li.setAttribute("style", "background-color:purple; padding: 10px; font-size: 20px; margin:5px")
         listEl.appendChild(li);
-    
      } 
 }
 listEl.addEventListener('click', function(e) {
     var target = e.target.textContent;
     var theAnswer = answers[currentQuestion]
 
-    if (target == theAnswer) {
+    if (target == theAnswer && currentQuestion == 3) {
+        correctOrWrong.textContent = "Correct"
+        removeListItems(listEl);
+        endOfGame();
+        
+    } else if (target == theAnswer){
         correctOrWrong.textContent = "Correct"
         currentQuestion++;
         removeListItems(listEl);
-        
+        renderQuestion();
     } else {
-        
         correctOrWrong.textContent = "Wrong"
     }
     
@@ -131,6 +135,13 @@ function removeListItems(parent) {
         parent.removeChild(parent.firstChild);
     }
         
+}
+
+function endOfGame() {
+    var stats = document.createElement("h2");
+    stats.textContent = 'Stats';
+
+    sectionEl.appendChild(stats);
 }
  
 
