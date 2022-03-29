@@ -16,7 +16,7 @@ var answers = ['<script src="xxx.js">', 'False' ]
 
 var questions = [
     { 
-        question: 'What is the correct syntax for referring to an external script called "xxx.js"?',
+        question: '1. What is the correct syntax for referring to an external script called "xxx.js"?',
         answers: [
         {option: '<script name="xxx.js">', answer: false},
         {option:'<script href="xxx.js">', answer: false}, 
@@ -26,7 +26,7 @@ var questions = [
     }, 
 
     {
-        question: 'Which of these or boolean values?',
+        question: '2. Which of these or boolean values?',
         answers: [
         {option: '123', answer: false},
         {option:'"Larry"', answer: false},
@@ -57,10 +57,9 @@ var questions = [
 
 
 
-
+var selection = questions[currentQuestion].answers.length;
 var item; 
-var isChecked = false;
-var myArray = [];
+
 
 startQuizBtn.addEventListener("click", function() {
     var timeLeft = 10;
@@ -92,7 +91,7 @@ function renderQuestion() {
     var btn;
     quizQuestionEl.textContent = questions[currentQuestion].question;
     
-    var selection = questions[currentQuestion].answers.length;
+    
     listEl.setAttribute("style", "background-color:white; color: white; list-style:none; width:20%; padding:0");
     
      for ( var i=0; i < selection; i++) {
@@ -101,10 +100,7 @@ function renderQuestion() {
         li.appendChild(item);
         li.setAttribute("style", "background-color:purple; padding: 10px; font-size: 20px; margin:5px")
         listEl.appendChild(li);
-        
-       
-        
-       
+    
      } 
 }
 listEl.addEventListener('click', function(e) {
@@ -112,10 +108,12 @@ listEl.addEventListener('click', function(e) {
     var theAnswer = answers[currentQuestion]
 
     if (target == theAnswer) {
-       
         correctOrWrong.textContent = "Correct"
+        currentQuestion++;
+        removeListItems(listEl);
+        
     } else {
-       
+        
         correctOrWrong.textContent = "Wrong"
     }
     
@@ -125,6 +123,16 @@ listEl.addEventListener('click', function(e) {
    
 })
 
+// Removes all child nodes with the while statement and setting the quizQuestionEl text content to blank.
+function removeListItems(parent) { 
+    quizQuestionEl.textContent =' ';
+    
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+        
+}
+ 
 
     /* btn.addEventListener("click", function(e) {
         var mySelection = questions[currentQuestion].answers[(e)].answer;
