@@ -4,26 +4,68 @@ var quizQuestionEl = document.getElementById('questions');
 var sectionEl = document.getElementById('container');
 var listEl = document.getElementById('list');
 var startPage = document.querySelector('.start-page');
+var correctOrWrong = document.getElementById('correct-or-wrong');
 
-var question1 = 'What is the correct syntax for referring to an external script called "xxx.js"?';
-var question2 = 'Which of these or boolean values?';
-var question3 = 'What is the file extension we use for JavaScript?'
-var question4 = 'Which of these is the way we write IF statements in JavaScript?'
 
-var mc1 = ['1. <script name="xxx.js">', ' 2. <script href="xxx.js"?', ' 3. <script src="xxx.js">'];
-var mc2 = ['1. 123', '2. "Larry"', '3. False', '4. ["One", "Two", "Three]']
-var mc3 = ['.Js', '.Java', '.javascript', '.xml']
-var mc4 = ['if i=5 then', 'if i=5', 'if i===5 then', 'if(i==5)']
+var correct = false;
+var currentQuestion = 0;
 
-var correctAnswer = [mc1[2], mc2[2], mc3[0], mc4[3]];
+
+
+
+
+var questions = [
+    { 
+        question: 'What is the correct syntax for referring to an external script called "xxx.js"?',
+        answers: [
+        {option: '<script name="xxx.js">', answer: false},
+        {option:'<script href="xxx.js">', answer: false}, 
+        {option: '<script src="xxx.js">', answer: true},
+        {option: '<Link rel src="xxx.js">', answer: false}
+        ]
+    }, 
+
+    {
+        question: 'Which of these or boolean values?',
+        answers: [
+        {option: '123', answer: false},
+        {option:'"Larry"', answer: false},
+        {option: 'False', answer: true},
+        {option: '["One", "Two", "Three]', answer: false}
+        ]
+    }
+
+    /*{
+        question: 'What is the file extension we use for JavaScript?',
+        answer: '.Js',
+        option1: '.Js', 
+        option2: '.Java', 
+        option3: '.javascript', 
+        option4: '.xml'
+        
+    }, 
+
+    {
+        question: 'Which of these is the way we write IF statements in JavaScript?',
+        answer: 'if(i==5)',
+        option1: 'if i=5 then', 
+        option2:'if i=5', 
+        option3: 'if i===5 then', 
+        option4: 'if(i==5)'
+    }*/
+]
+
+
+
+
 var item; 
+var isChecked = false;
+var myArray = [];
 
 startQuizBtn.addEventListener("click", function() {
     var timeLeft = 10;
-    
-    quizQuestionEl.textContent = question1;
-    console.log(quizQuestionEl);
 
+    renderQuestion();
     
     if (startPage.style.display !== "none") {
         startPage.style.display = "none";
@@ -42,36 +84,54 @@ startQuizBtn.addEventListener("click", function() {
         
     }, 1000)
 
-    makeOrderList();
-
+    
 })
 
 
-
-
-function makeOrderList() {
-   
-    for (var i = 0; i < mc1.length; i++) {
-        item = document.createElement('li');
-        item.textContent = mc1[i];
-        listEl.appendChild(item);
-        listEl.setAttribute("style", "background-color:white; color: white; list-style:none; width:20%; padding:0");
-        item.classList.add("list-style");
-        console.log(listEl);
-    }
-
-
+function renderQuestion() {
+    var btn;
+    quizQuestionEl.textContent = questions[currentQuestion].question;
     
-    return listEl;
-
+    var selection = questions[currentQuestion].answers.length;
+    listEl.setAttribute("style", "background-color:white; color: white; list-style:none; width:20%; padding:0");
+    
+     for ( var i=0; i < selection; i++) {
+        li = document.createElement('li');
+        item = document.createTextNode(questions[currentQuestion].answers[i].option);
+        li.appendChild(item);
+        li.setAttribute("style", "background-color:purple")
+        listEl.appendChild(li);
+        console.log(listEl);
+        console.log(item)
+       
+        
+       
+     } 
 }
+listEl.addEventListener('click', function(e) {
+    var target = e.target;
+    console.log(target)
+})
 
-function checkAnswer(answer) {
-    var selectedAnswer = false; 
 
-}
+    /* btn.addEventListener("click", function(e) {
+        var mySelection = questions[currentQuestion].answers[(e)].answer;
+        
+        if (mySelection) {
+            correctOrWrong.textContent = "Correct";
+        } else {
+            correctOrWrong.textContent = "Wrong";
+        }
 
-console.log(correctAnswer);
+        sectionEl.appendChild(correctOrWrong);
+        
+     })
+     
+
+}*/
+
+
+
 
 
 
