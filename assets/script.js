@@ -7,10 +7,12 @@ var startPage = document.querySelector('.start-page');
 var correctOrWrong = document.getElementById('correct-or-wrong');
 
 
-
+var highScore = 0;
 var correct = 0;
 var numOfQuestions = 4;
 var currentQuestion = 0;
+
+var finalScoreCalc; 
 
 var answers = ['<script src="xxx.js">', 'False', '.Js', 'if(i==5)']
 
@@ -64,7 +66,7 @@ var item;
 
 startQuizBtn.addEventListener("click", function() {
     var timeLeft = 10;
-
+    correct = 0;
     renderQuestion();
     
     if (startPage.style.display !== "none") {
@@ -103,6 +105,8 @@ function renderQuestion() {
         listEl.appendChild(li);
      } 
 }
+
+
 listEl.addEventListener('click', function(e) {
     var target = e.target.textContent;
     var theAnswer = answers[currentQuestion]
@@ -110,8 +114,8 @@ listEl.addEventListener('click', function(e) {
     if (target == theAnswer && currentQuestion == 3) {
         correctOrWrong.textContent = "Correct"
         removeListItems(listEl);
-        endOfGame();
         correct++;
+        endOfGame();
         
     } else if (target != theAnswer && currentQuestion == 3){
         correctOrWrong.textContent = "Wrong"
@@ -149,8 +153,17 @@ function removeListItems(parent) {
         
 }
 
+function removeEndOfGame(parent) { 
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+        
+}
+
+
 function endOfGame() {
 
+    console.log(correct);
     var stats = document.createElement("h2");
     
     var form = document.createElement("form");
@@ -169,24 +182,70 @@ function endOfGame() {
     form.appendChild(submitBtn);
 
     stats.textContent = 'All Done';
-  
+    finalScore();
+
     
     sectionEl.appendChild(stats);
     sectionEl.appendChild(form);
 
-    finalScore();
+    submitBtn.addEventListener("click", function(e) { 
+        e.preventDefault(); 
+        setFinalScores(initials.value);
+        viewHighScores();
+    })
+    
+
+    setFinalScores();
 }  
 
 
 function finalScore() {
      var yourScore = document.createElement("h4");
-
-    var finalScoreCalc = ((correct/numOfQuestions)*100).toString();
-
+    finalScoreCalc = ((correct/numOfQuestions)*100).toString();
+    
     yourScore.textContent = "Your final score was " + finalScoreCalc;
     sectionEl.appendChild(yourScore);
+    return finalScoreCalc;
 
 }
+
+function setFinalScores(initials) {
+    finalScoreCalc = ((correct/numOfQuestions)*100).toString();
+    
+    var usersHighScore = {
+        initials: initials,
+        highScore: finalScoreCalc
+    }
+    localStorage.setItem("highScores", JSON.stringify(usersHighScore));
+    
+}
+
+function getFinalScores() {
+    finalScoreCalc = ((correct/numOfQuestions)*100).toString();
+    var storedScores = localStorage.getItem("highScores");
+
+    if (storedScores === null) {
+        highScore = 0;
+    } else {
+        highScore = JSON.parse(storedScores);
+        console.log(highScore.highScore);
+        
+    }
+}
+
+function viewHighScores() {
+    removeEndOfGame(sectionEl);
+    getFinalScores();
+   var highScoresHeading =  document.createElement('h2');
+    highScoresHeading.textContent = 'High Scores';
+    var myHighScoreShow = document.createElement('p');
+    myHighScoreShow.textContent = "My high Score";
+
+    sectionEl.appendChild(highScoresHeading);
+}
+
+
+
  
 
 
