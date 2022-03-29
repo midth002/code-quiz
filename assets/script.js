@@ -12,6 +12,8 @@ var highScore = 0;
 var correct = 0;
 var numOfQuestions = 4;
 var currentQuestion = 0;
+var initials;
+
 
 var finalScoreCalc; 
 
@@ -162,33 +164,34 @@ function removeEndOfGame(parent) {
 }
 
 
+
 function endOfGame() {
 
-    console.log(correct);
-    var stats = document.createElement("h2");
+var stats = document.createElement("h2");
     
-    var form = document.createElement("form");
-    var initials = document.createElement("input");
-    var submitBtn = document.createElement("input");
+var form = document.createElement("form");
+initials = document.createElement("input");
+var submitBtn = document.createElement("input");
 
-    initials.setAttribute("type", "text");
-    initials.setAttribute("name", "initials");
-    initials.setAttribute("placeholder", "Put down your initials to save your score");
+initials.setAttribute("type", "text");
+initials.setAttribute("name", "initials");
+initials.setAttribute("placeholder", "Put down your initials to save your score");
+
+
+submitBtn.setAttribute("type", "submit");
+submitBtn.setAttribute("value", "Submit");
+
+form.appendChild(initials);
+form.appendChild(submitBtn);
+
+stats.textContent = 'All Done';
+finalScore();
+
+
+sectionEl.appendChild(stats);
+sectionEl.appendChild(form);
     
-    
-    submitBtn.setAttribute("type", "submit");
-    submitBtn.setAttribute("value", "Submit");
-
-    form.appendChild(initials);
-    form.appendChild(submitBtn);
-
-    stats.textContent = 'All Done';
-    finalScore();
-
-    
-    sectionEl.appendChild(stats);
-    sectionEl.appendChild(form);
-
+  
     submitBtn.addEventListener("click", function(e) { 
         e.preventDefault(); 
         setFinalScores(initials.value);
@@ -196,7 +199,7 @@ function endOfGame() {
     })
     
 
-    setFinalScores();
+    
 }  
 
 
@@ -216,21 +219,19 @@ function setFinalScores(initials) {
     var usersHighScore = {
         initials: initials,
         highScore: finalScoreCalc
-    }
-    localStorage.setItem("highScores", JSON.stringify(usersHighScore));
+    } 
+
+    var savedObject = JSON.parse(localStorage.getItem("highScores"));
+    var savedScore = (savedObject.highScore);
     
+    if(savedScore < finalScoreCalc) {
+        localStorage.setItem("highScores", JSON.stringify(usersHighScore));
+    }
 }
 
 function getFinalScores() {
-    finalScoreCalc = ((correct/numOfQuestions)*100).toString();
     var storedScores = localStorage.getItem("highScores");
-
-    if (storedScores === null) {
-        highScore = 0;
-    } else {
-        highScore = JSON.parse(storedScores);
-        console.log(highScore.initials + "-" + highScore.highScore);
-    }
+    highScore = JSON.parse(storedScores);
 }
 
 function viewHighScores() {
@@ -255,8 +256,23 @@ function viewHighScores() {
 
     sectionEl.appendChild(hsc);
     sectionEl.appendChild(btnEl);
+
+
 }
 
+function resetGame() {
+    
+    startPage.setAttribute("style", "display: block");
+    
+}
+
+btnEl.addEventListener("click", resetGame());
+btnEl.
+
+function clearHighScore() {
+    
+    console.log(getFinalScores())
+}
 
 
 
