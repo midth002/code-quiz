@@ -7,10 +7,10 @@ var startPage = document.querySelector('.start-page');
 var correctOrWrong = document.getElementById('correct-or-wrong');
 
 
-var correct = false;
+
+var correct = 0;
+var numOfQuestions = 4;
 var currentQuestion = 0;
-
-
 
 var answers = ['<script src="xxx.js">', 'False', '.Js', 'if(i==5)']
 
@@ -111,14 +111,26 @@ listEl.addEventListener('click', function(e) {
         correctOrWrong.textContent = "Correct"
         removeListItems(listEl);
         endOfGame();
+        correct++;
         
-    } else if (target == theAnswer){
+    } else if (target != theAnswer && currentQuestion == 3){
+        correctOrWrong.textContent = "Wrong"
+        removeListItems(listEl);
+        endOfGame();
+        
+    }
+    else if (target == theAnswer){
         correctOrWrong.textContent = "Correct"
         currentQuestion++;
+        correct++;
         removeListItems(listEl);
         renderQuestion();
     } else {
         correctOrWrong.textContent = "Wrong"
+        currentQuestion++;
+        removeListItems(listEl);
+        renderQuestion();
+        
     }
     
     // correctOrWrong = document.createTextNode(target);
@@ -138,23 +150,45 @@ function removeListItems(parent) {
 }
 
 function endOfGame() {
-    var stats = document.createElement("h2");
-    stats.textContent = 'Stats';
 
+    var stats = document.createElement("h2");
+    
+    var form = document.createElement("form");
+    var initials = document.createElement("input");
+    var submitBtn = document.createElement("input");
+
+    initials.setAttribute("type", "text");
+    initials.setAttribute("name", "initials");
+    initials.setAttribute("placeholder", "Put down your initials to save your score");
+    
+    
+    submitBtn.setAttribute("type", "submit");
+    submitBtn.setAttribute("value", "Submit");
+
+    form.appendChild(initials);
+    form.appendChild(submitBtn);
+
+    stats.textContent = 'All Done';
+  
+    
     sectionEl.appendChild(stats);
+    sectionEl.appendChild(form);
+
+    finalScore();
+}  
+
+
+function finalScore() {
+     var yourScore = document.createElement("h4");
+
+    var finalScoreCalc = ((correct/numOfQuestions)*100).toString();
+
+    yourScore.textContent = "Your final score was " + finalScoreCalc;
+    sectionEl.appendChild(yourScore);
+
 }
  
 
-    /* btn.addEventListener("click", function(e) {
-        var mySelection = questions[currentQuestion].answers[(e)].answer;
-        
-      
-        
-        
-     })
-     
-
-}*/
 
 
 
