@@ -5,7 +5,8 @@ var sectionEl = document.getElementById('container');
 var listEl = document.getElementById('list');
 var startPage = document.querySelector('.start-page');
 var correctOrWrong = document.getElementById('correct-or-wrong');
-
+var btnEl = document.getElementById('buttons');
+var hsc = document.getElementById('highScoreContent');
 
 var highScore = 0;
 var correct = 0;
@@ -228,8 +229,7 @@ function getFinalScores() {
         highScore = 0;
     } else {
         highScore = JSON.parse(storedScores);
-        console.log(highScore.highScore);
-        
+        console.log(highScore.initials + "-" + highScore.highScore);
     }
 }
 
@@ -237,12 +237,27 @@ function viewHighScores() {
     removeEndOfGame(sectionEl);
     getFinalScores();
    var highScoresHeading =  document.createElement('h2');
+   var myHighScoreShow = document.createElement('p');
+   var clearBtn = document.createElement('button');
+   var goBackBtn = document.createElement('button');
     highScoresHeading.textContent = 'High Scores';
-    var myHighScoreShow = document.createElement('p');
-    myHighScoreShow.textContent = "My high Score";
+    clearBtn.textContent = "Clear HighScores";
+    goBackBtn.textContent = "Go Back";
+    myHighScoreShow.textContent = highScore.initials + "-" + highScore.highScore;
 
-    sectionEl.appendChild(highScoresHeading);
+    btnEl.setAttribute("style", "display:block");
+
+    
+    hsc.appendChild(highScoresHeading);
+    hsc.appendChild(myHighScoreShow);
+    btnEl.appendChild(clearBtn);
+    btnEl.appendChild(goBackBtn);
+
+    sectionEl.appendChild(hsc);
+    sectionEl.appendChild(btnEl);
 }
+
+
 
 
 
