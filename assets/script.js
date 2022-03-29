@@ -12,7 +12,7 @@ var currentQuestion = 0;
 
 
 
-
+var answers = ['<script src="xxx.js">', 'False' ]
 
 var questions = [
     { 
@@ -99,31 +99,38 @@ function renderQuestion() {
         li = document.createElement('li');
         item = document.createTextNode(questions[currentQuestion].answers[i].option);
         li.appendChild(item);
-        li.setAttribute("style", "background-color:purple")
+        li.setAttribute("style", "background-color:purple; padding: 10px; font-size: 20px; margin:5px")
         listEl.appendChild(li);
-        console.log(listEl);
-        console.log(item)
+        
        
         
        
      } 
 }
 listEl.addEventListener('click', function(e) {
-    var target = e.target;
-    console.log(target)
+    var target = e.target.textContent;
+    var theAnswer = answers[currentQuestion]
+
+    if (target == theAnswer) {
+       
+        correctOrWrong.textContent = "Correct"
+    } else {
+       
+        correctOrWrong.textContent = "Wrong"
+    }
+    
+    // correctOrWrong = document.createTextNode(target);
+    
+    sectionEl.appendChild(correctOrWrong);
+   
 })
 
 
     /* btn.addEventListener("click", function(e) {
         var mySelection = questions[currentQuestion].answers[(e)].answer;
         
-        if (mySelection) {
-            correctOrWrong.textContent = "Correct";
-        } else {
-            correctOrWrong.textContent = "Wrong";
-        }
-
-        sectionEl.appendChild(correctOrWrong);
+      
+        
         
      })
      
