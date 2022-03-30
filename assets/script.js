@@ -8,7 +8,7 @@ var correctOrWrong = document.getElementById('correct-or-wrong');
 var btnResetEl = document.getElementById('reset');
 var goBackBtnEl = document.getElementById('go-back');
 var hsc = document.getElementById('highScoreContent');
-
+var startBtn;
 
 var highScore = 0;
 var correct = 0;
@@ -70,31 +70,54 @@ var selection = questions[currentQuestion].answers.length;
 var item; 
 var timeLeft = 100;
 
-startQuizBtn.addEventListener("click", function() {
+function setFirstPage() {
+    var aboutGame = document.createElement('p');
+    startBtn = document.createElement('button');
+
+    aboutGame.textContent = 'Welcome to the Javascript Code Quiz challenge. You will find introductory Javascript questions to see how high you know Javascript and how high you can score. At the end of the game, you will see your score based on the questions you answered given the amount of time you answered. Hit the start button to start the quiz.';
+    startBtn.textContent = "Start Quiz";
+
+    aboutGame.setAttribute("style" , "font-size: 20px; ")
+    startPage.setAttribute("style", "padding: 25px; display:block; text-align:center;")
+    startBtn.setAttribute("style", "background-color: purple; font-size: 25px; color:white; border:none; padding:10px; ")
+
+    startPage.appendChild(aboutGame);
+    startPage.appendChild(startBtn);
+}
+
+setFirstPage();
+
+
+startPage.addEventListener("click", function() {
     
     correct = 0;
-    renderQuestion();
+    
+     
     
     if (startPage.style.display !== "none") {
          startPage.style.display = "none";
      } else {
          startPage.style.display = "block";
      }
-     
+
+     renderQuestion();
+    
     var timeInterval = setInterval(function() {
         if (timeLeft >= 1) {
             timeLeft--;
             timerEl.textContent = "Time: " + timeLeft;
+            
         } else {
             timerEl.textContent = "Time is up!";
             clearInterval(timeInterval);
+            removeListItems(sectionEl);
+            endOfGame();
         }
         
     }, 1000)
 
     
 })
-
 
 function renderQuestion() {
     quizQuestionEl.textContent = questions[currentQuestion].question;
@@ -110,7 +133,13 @@ function renderQuestion() {
         listEl.appendChild(li);
         sectionEl.appendChild(listEl);
      } 
+
+    
+
+     
 }
+
+
 
 
 listEl.addEventListener('click', function(e) {
@@ -135,18 +164,15 @@ listEl.addEventListener('click', function(e) {
         correct++;
         removeListItems(listEl);
         renderQuestion();
-    } else if (target != theAnswer) {
+    } else  {
         correctOrWrong.textContent = "Wrong"
         currentQuestion++;
         removeListItems(listEl);
         renderQuestion();
         timeLeft =  timeLeft - 10;
         
-    } else {
-        endOfGame();
-    }
-    
-    
+    } 
+   
     sectionEl.appendChild(correctOrWrong);
    
 })
@@ -248,6 +274,9 @@ function viewHighScores() {
     highScoresHeading.textContent = 'Scores';
     clearBtn.textContent = "Clear HighScores";
     goBackBtn.textContent = "Go Back";
+
+    
+
     myHighScoreShow.textContent = highScore.initials + "-" + highScore.highScore;
 
     hsc.appendChild(highScoresHeading);
@@ -256,32 +285,15 @@ function viewHighScores() {
     goBackBtnEl.appendChild(goBackBtn);
 
     sectionEl.appendChild(hsc);
-    sectionEl.appendChild(goBackBtn);
-    sectionEl.appendChild(btnResetEl)
+    sectionEl.appendChild(goBackBtnEl);
+    sectionEl.appendChild(btnResetEl);
 
 }
 
-function resetGame() {
-    removeEndOfGame(btnResetEl);  
-    removeEndOfGame(hsc);  
-    removeEndOfGame(goBackBtnEl);  
-    removeEndOfGame(sectionEl)
-     
-    if (startPage.style.display !== "block") {
-        startPage.style.display = "block";
-    } else {
-        startPage.style.display = "none";
-    }
-    
-    
-    console.log("I click");
-    
-}
 
-goBackBtnEl.addEventListener("click", resetGame());
-
-
-
+goBackBtnEl.addEventListener("click", function() {
+    window.location.reload();
+})
 
 
 

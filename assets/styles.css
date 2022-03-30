@@ -1,3 +1,8 @@
+body {
+    margin: 0 auto;
+    padding: 10px;
+}
+
 .list-style:hover {
  background-color: lightgrey;
 }
