@@ -1,43 +1,17 @@
-# code-quiz
+# Javascript code-quiz
 
-// pseudo coded 
-1. Start screen with title, rules, start button, timer
-2. Question screen container with question text, buttons, timer, feedback based on answer selected
-3. End of game container with final score, form to enter initials, and a submit button
-4. High score page 
+## Summary
 
+This application is a simple Javascript code quiz with 4 questions and a timer of thirty seconds. Don't let the 4 intro questions fool you. The answers you get wrong, 5 additional seconds will be deducted for your time to do the quiz. At the end of the quiz, you can keep your high scores in your own local storage and compete against other users. The application is simple and easy to use as it is easy to start the quiz, see what questions you got right or wrong and big purple buttons to reset the game, clear your high scores and submit your initials to be saved in the local storage.
 
-JS
+## Screenshot 
+![Start Page](./assets/images/start.png)
 
-1. Declare variables to reference DOM elements in your HTML document
+![Example Question](./assets/images/example-question.png)
 
-    - StartQuizBtn, StartScreenEl, timerEl, highScoreEl
-    - QuestionEl, questionTitleEl, answerChoicesEl
+![Submit](./assets/images/submit.png)
 
+![Highscore and Restart](./assets/images/highscorepng.png)
 
-2. Create an array of objects that hold all question -- can store this in a separate JS file
-    - Answer choices
-    - Question text
-    - Correct answer
-
-3. Create a startQuiz() function trigerred by the StartQuizBtn
-    -Hide start screen
-    -Unhide questions screen
-    -Starts timer
-    -Grab first question in the array
-
-4. Create a function to getQuestion()
-    - Renders title, choices and buttons
-
-5. Create a function to check if an answer is correctly
-    -If the answer is correct, then move on to the next question
-    -If answer is wrong, decrement timer and move on to next question
-    -Keep track of score/points
-    -Increment index in array of questions to move on
-
-6. Create a function to end the quiz
-    -Hide this QuestionEl
-    -Unhide the End of quiz element
-    -Unhide your final score element, form, submit btn
-
-7. Create functionality to save high scores to localStorage
+## Link
+[GitHub Javascript Code Quiz](https://midth002.github.io/code-quiz/)

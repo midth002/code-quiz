@@ -170,7 +170,7 @@ listEl.addEventListener('click', function(e) {
         currentQuestion++;
         removeListItems(listEl);
         renderQuestion();
-        timeLeft =  timeLeft - 10;
+        timeLeft =  timeLeft - 5;
         
     } 
    
