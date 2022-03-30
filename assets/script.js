@@ -15,6 +15,7 @@ var correct = 0;
 var numOfQuestions = 4;
 var currentQuestion = 0;
 var initials;
+var myHighScoreShow;
 
 
 var finalScoreCalc; 
@@ -68,7 +69,7 @@ var questions = [
 
 var selection = questions[currentQuestion].answers.length;
 var item; 
-var timeLeft = 100;
+var timeLeft = 30;
 
 function setFirstPage() {
     var aboutGame = document.createElement('p');
@@ -208,10 +209,12 @@ var submitBtn = document.createElement("input");
 initials.setAttribute("type", "text");
 initials.setAttribute("name", "initials");
 initials.setAttribute("placeholder", "Put down your initials to save your score");
+initials.setAttribute("style", "width: 80%; height: auto; font-size: 25px; margin-top: 5px;")
 
 
 submitBtn.setAttribute("type", "submit");
 submitBtn.setAttribute("value", "Submit");
+submitBtn.setAttribute("style", "background-color: purple; font-size: 18px; color:white; border:none; padding:7px; margin: 10px;")
 
 form.appendChild(initials);
 form.appendChild(submitBtn);
@@ -247,16 +250,11 @@ function setFinalScores(initials) {
     finalScoreCalc = ((correct/numOfQuestions)*100).toString();
     
     var usersHighScore = {
-        initials: initials.value,
+        initials: initials,
         highScore: finalScoreCalc
     } 
 
-    var savedObject = JSON.parse(localStorage.getItem("highScores"));
-    var savedScore = (savedObject.highScore);
-    
-    if(savedScore < finalScoreCalc) {
         localStorage.setItem("highScores", JSON.stringify(usersHighScore));
-    }
 }
 
 function getFinalScores() {
@@ -268,13 +266,15 @@ function viewHighScores() {
     removeEndOfGame(sectionEl);
     getFinalScores();
    var highScoresHeading =  document.createElement('h2');
-   var myHighScoreShow = document.createElement('p');
+    myHighScoreShow = document.createElement('p');
    var clearBtn = document.createElement('button');
    var goBackBtn = document.createElement('button');
     highScoresHeading.textContent = 'Scores';
     clearBtn.textContent = "Clear HighScores";
     goBackBtn.textContent = "Go Back";
 
+    clearBtn.setAttribute("style", "background-color: purple; font-size: 18px; color:white; border:none; padding:5px; margin: 10px;");
+    goBackBtn.setAttribute("style", "background-color: purple; font-size: 18px; color:white; border:none; padding:5px; margin: 10px; ");
     
 
     myHighScoreShow.textContent = highScore.initials + "-" + highScore.highScore;
@@ -293,6 +293,11 @@ function viewHighScores() {
 
 goBackBtnEl.addEventListener("click", function() {
     window.location.reload();
+})
+
+btnResetEl.addEventListener("click", function() {
+    localStorage.clear();
+    myHighScoreShow.textContent = "High Scores Cleared"
 })
 
 
